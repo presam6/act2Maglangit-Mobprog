@@ -12,9 +12,9 @@ const CustomButton = ({
   return (
     <TouchableOpacity
       onPress={onPress}
-      style={[styles.myButton, {width: width}, buttonStyle]}
+      style={[styles.myButton, { width: width }, buttonStyle]}
     >
-      <Text style={{ color:textColor }}>{title}</Text>
+      <Text style={{ color: textColor }}>{title}</Text>
     </TouchableOpacity>
   )
 }
@@ -25,8 +25,15 @@ export default function App() {
     studentId: '',
   });
 
+  const [allStudentData, setAllStudentData] = useState([]);
+
+  const addData = () => {
+    setAllStudentData([...allStudentData, studentInfo]);
+    setStudentInfo({ name: '', studentId: '' }); // Clear the placeholders after adding data
+  };
+
   const showResults = () => {
-    Alert.alert(`Student Name: ${studentInfo.name}\nStudent ID: ${studentInfo.studentId}`);
+    Alert.alert('All Student Data', JSON.stringify(allStudentData, null, 2));
   };
 
   return (
@@ -42,19 +49,27 @@ export default function App() {
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Student Name"
+          value={studentInfo.name}
           onChangeText={(text) => setStudentInfo({ ...studentInfo, name: text })}
           style={styles.input}
         />
 
         <TextInput
           placeholder="Student ID"
+          value={studentInfo.studentId}
           onChangeText={(text) => setStudentInfo({ ...studentInfo, studentId: text })}
           style={styles.input}
         />
       </View>
 
-      {/* button */}
-      <View style={styles.arrangeButton}>
+      {/* buttons */}
+      <View style={styles.buttonContainer}>
+        <CustomButton
+          onPress={addData}
+          title='Add Data'
+          textColor='black'
+          buttonStyle={{ backgroundColor: 'green' }}
+        />
         <CustomButton
           onPress={showResults}
           title='Show Results'
@@ -100,12 +115,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     paddingLeft: 10,
   },
-  arrangeButton: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 50,
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '80%',
+    marginTop: 20,
   },
   myButton: {
     padding: 10,
