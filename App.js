@@ -28,12 +28,25 @@ export default function App() {
   const [allStudentData, setAllStudentData] = useState([]);
 
   const addData = () => {
+    if (studentInfo.name.trim() === '' || studentInfo.studentId.trim() === '') {
+      Alert.alert('Error', 'Please fill in all fields before adding data.');
+      return;
+    }
+
     setAllStudentData([...allStudentData, studentInfo]);
     setStudentInfo({ name: '', studentId: '' }); // Clear the placeholders after adding data
   };
 
   const showResults = () => {
-    Alert.alert('All Student Data', JSON.stringify(allStudentData, null, 2));
+    if (allStudentData.length === 0) {
+      Alert.alert('No Data', 'No student data to display.');
+    } else {
+      Alert.alert('All Student Data', JSON.stringify(allStudentData, null, 2));
+    }
+  };
+
+  const clearData = () => {
+    setAllStudentData([]);
   };
 
   return (
@@ -67,8 +80,14 @@ export default function App() {
         <CustomButton
           onPress={addData}
           title='Add Data'
-          textColor='black'
+          textColor='white'
           buttonStyle={{ backgroundColor: 'green' }}
+        />
+        <CustomButton
+          onPress={clearData}
+          title='Clear Data'
+          textColor='white'
+          buttonStyle={{ backgroundColor: 'red' }}
         />
         <CustomButton
           onPress={showResults}
@@ -90,7 +109,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-    marginTop: 50,
+    marginTop: 150,
   },
   textTitle: {
     fontSize: 24,
@@ -105,7 +124,6 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: 2,
     flexDirection: 'column',
-    backgroundColor: 'red',
     width: '50%',
   },
   input: {
@@ -117,9 +135,10 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-evenly',
     width: '80%',
     marginTop: 20,
+    marginBottom: 50,
   },
   myButton: {
     padding: 10,
