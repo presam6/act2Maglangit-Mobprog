@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
+// Custom button para ma edit ang color sa text sulod sa button
 const CustomButton = ({
   onPress,
   title,
@@ -20,6 +21,7 @@ const CustomButton = ({
 }
 
 export default function App() {
+  // Array para pag store sa data tas i call sa display function
   const [studentInfo, setStudentInfo] = useState({
     name: '',
     studentId: '',
@@ -27,16 +29,19 @@ export default function App() {
 
   const [allStudentData, setAllStudentData] = useState([]);
 
+  // function sa add button
   const addData = () => {
     if (studentInfo.name.trim() === '' || studentInfo.studentId.trim() === '') {
       Alert.alert('Error', 'Please fill in all fields before adding data.');
       return;
     }
 
+    // Clear text sa placeholders after sa pag add sa data
     setAllStudentData([...allStudentData, studentInfo]);
-    setStudentInfo({ name: '', studentId: '' }); // Clear the placeholders after adding data
+    setStudentInfo({ name: '', studentId: '' }); 
   };
 
+  // function sa show results button
   const showResults = () => {
     if (allStudentData.length === 0) {
       Alert.alert('No Data', 'No student data to display.');
@@ -45,13 +50,14 @@ export default function App() {
     }
   };
 
+  // simple erase sa data
   const clearData = () => {
     setAllStudentData([]);
   };
 
   return (
     <View style={styles.container}>
-      {/* text */}
+      {/* Top Part */}
       <View style={styles.textContainer}>
         <Text style={styles.textTitle}>Act 2 Maglangit</Text>
         <Text style={styles.subTitle}>Student Information</Text>
@@ -77,18 +83,21 @@ export default function App() {
 
       {/* buttons */}
       <View style={styles.buttonContainer}>
+        {/* Add Button */}
         <CustomButton
           onPress={addData}
           title='Add Data'
           textColor='white'
           buttonStyle={{ backgroundColor: 'green' }}
         />
+        {/* Clear Button */}
         <CustomButton
           onPress={clearData}
           title='Clear Data'
           textColor='white'
           buttonStyle={{ backgroundColor: 'red' }}
         />
+        {/* Show/Display Button */}
         <CustomButton
           onPress={showResults}
           title='Show Results'
