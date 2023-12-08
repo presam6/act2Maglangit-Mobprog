@@ -21,18 +21,19 @@ const CustomButton = ({
 }
 
 export default function App() {
-  // Array para pag store sa data tas i call sa display function
+  // State para sa pag get sa data from the add button
   const [studentInfo, setStudentInfo] = useState({
     name: '',
     studentId: '',
   });
 
+  // State [Empty Array]
   const [allStudentData, setAllStudentData] = useState([]);
 
   // function sa add button
   const addData = () => {
     if (studentInfo.name.trim() === '' || studentInfo.studentId.trim() === '') {
-      Alert.alert('Error', 'Please fill in all fields before adding data.');
+      Alert.alert('Error', 'Please fill in the form before adding data.');
       return;
     }
 
@@ -44,13 +45,13 @@ export default function App() {
   // function sa show results button
   const showResults = () => {
     if (allStudentData.length === 0) {
-      Alert.alert('No Data', 'No student data to display.');
+      Alert.alert('No Results to Show', 'You have not added any data.');
     } else {
-      Alert.alert('All Student Data', JSON.stringify(allStudentData, null, 2));
+      Alert.alert('Showing Results for Student Data', JSON.stringify(allStudentData, null, 2));
     }
   };
 
-  // simple erase sa data
+  // simple erase sa data [Clear Button]
   const clearData = () => {
     setAllStudentData([]);
   };
